@@ -3,11 +3,13 @@
     background-image: url('https://i.pinimg.com/originals/0e/60/68/0e6068eb08dddb94950bbb177abf1c52.jpg');
     display: flex;
     justify-content: center;
+    position: relative;
+    width: 100%;
 }
 
 .Footer-letters {
     padding-top: 25px;
-    padding-bottom: 65px;
+    padding-bottom: 30px;
     display: inline-block;
     text-align: center;
 }

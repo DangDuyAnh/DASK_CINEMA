@@ -5,7 +5,7 @@ export const newsData = [
     },
     {
         title: "Venom",
-        src: "https://www.bhdstar.vn/wp-content/uploads/2021/10/Venom-1920x1080.jpg",
+        src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/Venom-1920x1080.jpg",
     },
     {
         title: "Shang Chi",
@@ -14,6 +14,10 @@ export const newsData = [
     {
         title: "Godzila",
         src: "https://www.elleman.vn/wp-content/uploads/2021/03/27/191590/review-phim-godzilla-vs.-kong-2021-elle-man-1.jpeg",
+    },
+    {
+        title: "Dune",
+        src: "https://www.bhdstar.vn/wp-content/uploads/2018/03/Dune-1920x1080.jpg",
     }
 ]
 

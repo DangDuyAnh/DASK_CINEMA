@@ -5,6 +5,7 @@
     width: 100%;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .Navbar-menu {
@@ -22,29 +23,43 @@
     user-select: none;
     position: absolute;
     z-index: 3;
-    padding: 0px 130px 00px 37px;
+    /* padding: 0px 130px 0px 15px; */
+    width: 300px;
     height: 0px;
-    transition: height 0.4s ease, padding 0.4s ease;
+    /* transition: height 0.4s ease, padding 0.4s ease; */
+    transition: height 0.4s ease;
     overflow: hidden;
 }
 
 .active-menu {
-    padding: 15px 130px 0px 37px;
+    /* padding: 15px 130px 0px 15px; */
     height: 300px;
 }
 
 .Navbar-menu-content a {
     color: rgb(221, 221, 221);
-    padding: 5px 10px;
+    /* padding: 5px 10px; */
     display: block;
     line-height: 32px;
     font-size: 18px;
-    text-transform: uppercase;
     font-weight: 400;
     text-decoration: none;
   }
 
-.Navbar-menu-content a:hover{
+.Navbar-menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-bottom: 1px solid #757575;
+}
+
+.Navbar-menu-active a{
+    cursor: pointer;
+    color: #00a8e1;
+}
+
+.Navbar-menu-active .Navbar-logo-icon{
     cursor: pointer;
     color: #00a8e1;
 }
@@ -146,6 +161,122 @@
     color: #00a8e1;
 }
 
+.Navbar-menu-small {
+    width: 100%;
+    padding-left: 30px;
+}
+
+.phim-dang-chieu {
+    padding: 4px 0px;
+    border-bottom: 1px solid #757575;
+}
+
+.phim-dang-chieu:hover, .Navbar-menu-item:hover {
+    cursor: pointer;
+    background-color: #424242;
+}
+
+.phim-dang-chieu a{
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.dask {
+    display: flex;
+    padding: 10px 10px;
+}
+
+.dask a{
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    color: rgb(226, 7, 7);
+    /* font-weight: 700; */
+    font-size: 60px;
+    font-family: 'Rye';
+    font-style: italic;
+}
+
+.dang-nhap {
+    display: flex;
+    align-items: center;
+    padding-top: 7px;
+    padding-right: 20px;
+}
+
+.dang-nhap p {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 5px;
+    margin: 0;
+}
+
+.dang-nhap:hover .Navbar-logo-icon {
+    cursor:pointer;
+    color: #00a8e1;
+}
+
+.dang-nhap:hover .dang-nhap-p {
+    cursor:pointer;
+    color: #00a8e1;
+}
+
+.Navbar-tab {
+    list-style-type: none;
+    position: absolute;
+    bottom: 0px;
+    left: 300px;
+    margin: 0;
+    padding: 0;
+}
+
+.Navbar-tab li {
+    float: left;
+}
+
+.Navbar-tab a, .Navbar-dropbtn {
+    cursor: pointer;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 24px 30px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+.Navbar-tab a:hover, .Navbar-dropdown:hover .Navbar-dropbtn {
+    color: #00a8e1;
+}
+
+.Navbar-dropdown {
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000000AA;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+
+.dropdown-content a{
+    text-align: left;
+    padding: 24px 16px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+  .Navbar-dropdown:hover .dropdown-content {
+    display: block;
+  }
 
 @media only screen and (max-width: 500px) {
     .extra {

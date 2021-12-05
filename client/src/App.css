@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'BungeeInline';
+    src: local('BungeeInline'), url(./fonts/BungeeInline-Regular.ttf) format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Rye';
+    src: local('Rye'), url(./fonts/Rye-Regular.ttf) format('truetype');
+  }
+
+  #app-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  #app-main-content {
+    flex: 1;
+  }

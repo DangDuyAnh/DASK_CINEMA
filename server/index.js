@@ -1,26 +1,30 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const {MONGO_URI, PORT} = require('./constants/constants');
+const mainRouter = require('./routes');
 
-const router = require('./routes/router');
+// connect to mongodb
+mongoose.connect(MONGO_URI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+})
+  .then(res => {
+  console.log("connected to mongodb");
+})
+  .catch(err => {
+      console.log(err);
+  })
 
 const app = express();
-const port = 5000;
 
 app.use(cors());
 app.use(express.json());
 
-app.use(router);
+app.use(mainRouter);
+app.use('/uploads', express.static('uploads'));
 
-const server = app.listen(port, () =>
-  console.log(`Server running on port ${port}`)
+const server = app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
 ); 
-
-const uri = 'mongodb+srv://user:a123456@cluster0.m5ghr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-mongoose.connect(uri, { useNewUrlParser: true }
-);
-
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log("MongoDB database connection established successfully");
-})
