@@ -5,7 +5,6 @@
 
 .MovieList-menu {
     list-style-type: none;
-    margin: 0;
     padding: 0;
     border-bottom: 1px solid #9e9e9e;
     display: block;
@@ -15,8 +14,8 @@
 .MovieList-menu li {
     float: left;
     position: relative;
-    margin: 0px 30px 0px 0px;
-    padding: 20px 0px 14px 0px;
+    margin: 0px 0px 0px 0px;
+    padding: 20px 15px 14px 15px;
 }
 
 .MovieList-a {
@@ -47,4 +46,68 @@
 }
 .MovieList-active {
     color: black;
+}
+
+.movie-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 290px);
+    justify-content: space-between;
+}
+
+.movie-card {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.movie-card-img {
+    width: 290px;
+    height: 435px;
+    padding: 0;
+    margin: 0;
+}
+
+.movie-card p {
+    padding: 0;
+    margin: 0;
+}
+
+.movie-text {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.movie-overlay {
+    display: none;
+}
+
+.movie-card-img:hover .movie-overlay {
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000B3;
+    width: 290px;
+    height: 435px;
+
+}
+
+.movie-card p:hover .movie-overlay {
+    display: none;
+}
+
+.mua-ve {
+    padding: 10px 20px;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.mua-ve p {
+    color: white;
+}
+
+.mua-ve:hover {
+    background-color: #00a8e1;
+    border: transparent;
 }

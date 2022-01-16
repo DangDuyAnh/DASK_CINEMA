@@ -10,4 +10,13 @@ moviesRoutes.post(
     asyncWrapper(moviesController.create)
 )
 
+moviesRoutes.get(
+    "/getListMovies/:movieKind",
+    asyncWrapper(moviesController.getMovieList)
+)
+
+moviesRoutes.get(
+    "/getMovie/:id",
+    asyncWrapper(moviesController.getMovie)
+)
 module.exports = moviesRoutes
