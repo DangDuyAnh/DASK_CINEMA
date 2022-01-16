@@ -7,6 +7,8 @@ import MovieList from './routes/movies-list';
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
 
+import Snacks from './routes/snacks';
+
 function App() {
   return (
     <>
@@ -17,6 +19,7 @@ function App() {
             <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/phim-dang-chieu/' component={MovieList}/>
+              <Route path='/do-an-vat' component={Snacks} />
             </Switch>
           </div>
         <Footer />

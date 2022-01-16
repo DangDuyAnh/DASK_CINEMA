@@ -141,7 +141,7 @@ export default function Navbar(){
                     </div>
                 </li>
                 <li >
-                <a >NHÀ HÀNG</a>
+                <a href="/do-an-vat/">ĐỒ ĂN</a>
                 </li>
                 <li><a>TIN TỨC</a></li>
                 <li><a>VÉ CỦA TÔI</a></li>
