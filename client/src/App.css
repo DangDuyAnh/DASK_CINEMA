@@ -8,12 +8,19 @@
     src: local('Rye'), url(./fonts/Rye-Regular.ttf) format('truetype');
   }
 
-  #app-container {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-  
-  #app-main-content {
-    flex: 1;
-  }
+#app-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+#app-main-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}

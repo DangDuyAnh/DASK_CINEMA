@@ -130,7 +130,7 @@ export default function Navbar(){
                     <a className="Navbar-dropbtn">PHIM</a>
                     <div className="dropdown-content">
                         <a href="/phim-dang-chieu/">PHIM ĐANG CHIẾU</a>
-                        <a>PHIM SẮP CHIẾU</a>
+                        <a href="/phim-sap-chieu/">PHIM SẮP CHIẾU</a>
                     </div>
                 </li>
                 <li className="Navbar-dropdown">
