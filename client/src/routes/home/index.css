@@ -89,12 +89,13 @@ font-size: 30px;
   }
 
 .movie-part {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 60px;
+  margin-right: 60px;
   width: 1080px;
   margin-top: 50px;
   position: relative;
   margin-bottom: 100px;
+  max-width: 70vw;
 }
 
 .phim-moi {
@@ -117,6 +118,7 @@ font-size: 30px;
   width: 100%;
   overflow: hidden;
   position: relative;
+  max-width: 70vw;
 }
 
 .track {
@@ -146,6 +148,7 @@ font-size: 30px;
   top: 55%;
   left: -47px;
   border-radius: 70px 0px 0px 70px;
+  z-index: 10;
 }
 
 .movie-next {
@@ -154,9 +157,10 @@ font-size: 30px;
   cursor: pointer;
   position: absolute;
   top: 55%;
-  right: -41px;
+  right: -47px;
   padding: 20px 10px 20px 0px;
   border-radius: 0px 70px 70px 0px;
+  z-index: 10;
 }
 
 .arrow {

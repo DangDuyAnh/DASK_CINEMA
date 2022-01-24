@@ -53,4 +53,25 @@ showtimeController.find = async (req, res, next) => {
         
 }
 
+showtimeController.get = async (req, res, next) => {
+    try {
+        let showtimeId = req.params.id;
+        const showtime = await ShowTimeModel.findById(showtimeId).populate({
+            path: 'cinema',
+            model: 'cinema'
+        }).populate({
+            path: 'movie',
+            model: 'movie'
+        });
+        return res.status(httpStatus.OK).json({
+            showtimes: showtime
+        })
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
+        
+}
+
 module.exports = showtimeController

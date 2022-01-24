@@ -60,7 +60,7 @@ export default function Homepage(){
 
   return (
     <IconContext.Provider value={{ size: "30px"}}>
-    <div >
+    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
       <div className="slide-container">
         {newsData.map((item, index) => {
           return(

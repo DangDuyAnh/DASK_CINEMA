@@ -13,4 +13,9 @@ showtimeRoutes.get(
     asyncWrapper(showtimeController.find)
 )
 
+showtimeRoutes.get(
+    "/findShowtime/:id",
+    asyncWrapper(showtimeController.get)
+)
+
 module.exports = showtimeRoutes

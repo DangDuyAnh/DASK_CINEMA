@@ -1,15 +1,6 @@
-.MovieList-container {
+/* .MovieList-container {
     display: flex;
     justify-content: center;
-}
-
-.MovieList-menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid #9e9e9e;
-    display: block;
-    height: 58px;
 }
 
 .MovieList-menu li {
@@ -47,4 +38,4 @@
 }
 .MovieList-active {
     color: black;
-}
+} */

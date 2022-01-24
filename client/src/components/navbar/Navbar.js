@@ -77,7 +77,7 @@ export default function Navbar(){
                                 <div className="Navbar-logo-icon">
                                     <MdArrowRight />
                                 </div>
-                                <a href="#">ĐỒ ĂN</a>
+                                <a href="#">QUẦY ONLINE</a>
                             </div>
 
                     </div>
@@ -141,7 +141,7 @@ export default function Navbar(){
                     </div>
                 </li>
                 <li >
-                <a href="/do-an-vat/">ĐỒ ĂN</a>
+                <a href="/do-an-vat/">QUẦY ONLINE</a>
                 </li>
                 <li><a>TIN TỨC</a></li>
                 <li><a>VÉ CỦA TÔI</a></li>

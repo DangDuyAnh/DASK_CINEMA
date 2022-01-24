@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import  { Redirect } from 'react-router-dom'
 import { BsClockHistory, BsPlayFill } from "react-icons/bs";
 import "./index.css"
 import { get } from "../../utility/api";
@@ -29,8 +28,7 @@ export default function Movie(props) {
         setDates(dateArray);
         let res = get("/movies/getMovie/" + props.match.params.id);
         res.then(res => {
-            console.log(res);
-            if (res.data === null) {
+            if (res.data === null || res.data === undefined) {
                 props.history.push('/404');
             }
             else {
@@ -62,6 +60,7 @@ export default function Movie(props) {
             }
         })
         .catch(function (error) {
+            props.history.push('/404');
             console.log(error);
           })
           
@@ -103,7 +102,7 @@ export default function Movie(props) {
 
     const getHour = (date) => {
         let singleHour = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-        let hour = date.getHours() + 1;
+        let hour = (date.getHours() + 1).toString();
         if (singleHour.includes(hour)) hour = '0' + hour;
         return hour
     }
@@ -127,6 +126,7 @@ export default function Movie(props) {
                         <a className="MovieList-a MovieList-active">{movie.title}</a>
                     </li>
                 </ul>
+                
                 <div style={{display: 'block'}}>
                     <div style={{maxWidth: '90vw'}}>
                         <div className="movie-card-img" style={{marginRight: '40px', float: 'left', backgroundImage: 'url('+ (API_URL + movie.poster) + ')'
@@ -215,7 +215,8 @@ export default function Movie(props) {
                             <div style={{width: '750px', height: '85px', border: '1px solid black', display: 'flex', alignItems: 'center'
                                 ,paddingLeft: '20px', maxWidth: '90vw'}}>
                                 {value.map((item, idx) => { return (
-                                <div key={idx} className="box-small-time">
+                                <div onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
+                                    + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="box-small-time">
                                     <p className="small-time">{item.time}</p>
                                 </div>
                                 )})}
@@ -237,7 +238,8 @@ export default function Movie(props) {
                             <div style={{width: '750px', height: '85px', border: '1px solid black', display: 'flex', alignItems: 'center'
                                 ,paddingLeft: '20px', maxWidth: '90vw'}}>
                                 {value.map((item, idx) => { return (
-                                <div key={idx} className="box-small-time">
+                                <div onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
+                                    + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="box-small-time">
                                     <p className="small-time">{item.time}</p>
                                 </div>
                                 )})}
