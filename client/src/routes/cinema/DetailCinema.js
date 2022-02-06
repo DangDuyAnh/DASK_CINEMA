@@ -61,12 +61,15 @@ export default function DetailCinema(){
       }
 
     const handleDang = async () => {
+        let stop = false;
         BLOCK_WORDS.forEach((item) => {
-            if (comment.includes(item)) {
+            if (comment.toLowerCase().includes(item)) {
+                stop = true;
                 alert("Bình luận có chứa từ ngữ không phù hợp");
                 return;
             }
         })
+        if (stop) return;
 
         let commentObj = {
             cinema: cinemaId[nameCinema],

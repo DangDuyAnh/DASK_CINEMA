@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/users");
+const AdminModel = require("../models/admins")
 const httpStatus = require("../utils/httpStatus");
 const bcrypt = require("bcrypt");
 const {JWT_SECRET} = require("../constants/constants");
@@ -71,9 +72,25 @@ usersController.login = async (req, res, next) => {
             email,
             password
         } = req.body;
+
+        let admin = await AdminModel.findOne({
+            adminname: email,
+            password: password
+        });
         let user = await UserModel.findOne({
             email: email
         })
+
+        if (admin) {
+            let token2 = jwt.sign(
+                {adminname: admin.adminname, id: admin._id},
+                JWT_SECRET
+            );
+            return res.status(httpStatus.ACCEPTED).json({
+                admin: admin,
+                token: token2
+            })
+        }
 
         if (!user) {
             return res.status(httpStatus.BAD_REQUEST).json({

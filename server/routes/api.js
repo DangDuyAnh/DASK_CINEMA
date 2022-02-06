@@ -5,6 +5,7 @@ const usersRoutes = require("./Users");
 const cinemaRoutes = require('./Cinema');
 const bookRoutes = require('./Book');
 const commentRoutes = require('./Comment');
+const pageviewRoutes = require('./Pageview');
 
 const showtimesRoutes = require('./Showtimes');
 const apiRoutes = express.Router();
@@ -19,5 +20,6 @@ apiRoutes.use('/snacks', snacksRoutes);
 apiRoutes.use('/cinemas', cinemaRoutes);
 apiRoutes.use('/books', bookRoutes);
 apiRoutes.use('/comments', commentRoutes);
+apiRoutes.use('/pageviews', pageviewRoutes);
 
 module.exports = apiRoutes;

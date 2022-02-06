@@ -13,14 +13,17 @@ export default function Navbar(props){
     const [menuButton, setMenuButton] = useState([false, false, false]);
     const [width, setWindowWidth] = useState(0);
     const [user, setUser] = useState(authenticationService.getUser());
+    const [admin, setAdmin] = useState(authenticationService.getAdmin());
 
     const logout = () => {
         authenticationService.logout();
         setUser(null);
+        setAdmin(null);
     }
 
     useEffect(() => {
         setUser(authenticationService.getUser());
+        setAdmin(authenticationService.getAdmin());
         updateDimensions();
 
         window.addEventListener('resize', updateDimensions);
@@ -94,12 +97,20 @@ export default function Navbar(props){
                                 </div>
                                 <a href="/404">TIN TỨC</a>
                             </div>
+                            {admin?
+                            <div className="Navbar-menu-item" style={{borderBottom: 0}}>
+                                <div className="Navbar-logo-icon">
+                                    <MdArrowRight />
+                                </div>
+                                <a href="/admin">ADMIN</a>
+                            </div>
+                            :
                             <div className="Navbar-menu-item" style={{borderBottom: 0}}>
                                 <div className="Navbar-logo-icon">
                                     <MdArrowRight />
                                 </div>
                                 <a href="/user/history">VÉ CỦA TÔI</a>
-                            </div>
+                            </div>}
 
                     </div>
                     </IconContext.Provider>
@@ -124,6 +135,16 @@ export default function Navbar(props){
             </div>
 
             <div>
+                {admin?
+                <Link style={{textDecoration: 'none'}} to='/admin'>
+                <div className="Navbar-wrapper extra">
+                    <div className="Navbar-logo-icon">
+                        <GiTicket />
+                    </div>
+                    <p className="Navbar-logo-description">Admin</p>
+                </div>
+                </Link>
+                :
                 <Link style={{textDecoration: 'none'}} to='/user/history'>
                 <div className="Navbar-wrapper extra">
                     <div className="Navbar-logo-icon">
@@ -132,8 +153,9 @@ export default function Navbar(props){
                     <p className="Navbar-logo-description">Vé của tôi</p>
                 </div>
                 </Link>
+                }
 
-                <Link style={{textDecoration: 'none', cursor: 'context-menu'}} to={user?{pathname: window.location.pathname}:{pathname: "/login", backURL: window.location.pathname}}>
+                {!admin && <Link style={{textDecoration: 'none', cursor: 'context-menu'}} to={user?{pathname: window.location.pathname}:{pathname: "/login", backURL: window.location.pathname}}>
                 <div className="Navbar-wrapper">
                     <div className={user?"Navbar-logo-icon-special":"Navbar-logo-icon"}>
                         <IoPerson />
@@ -142,6 +164,17 @@ export default function Navbar(props){
                     :<p className="Navbar-logo-description">Đăng nhập</p>}
                 </div>
                 </Link>
+                }
+
+                {admin && 
+                <div className="Navbar-wrapper">
+                    <div className={user?"Navbar-logo-icon-special":"Navbar-logo-icon"}>
+                        <IoPerson />
+                    </div>
+                    {admin?<p className="Navbar-logo-description-special"><span className="Navbar-logo-description-span">{admin.adminname}</span> | <span className="Navbar-logo-description-span" onClick={logout}>Thoát</span></p>
+                    :<p className="Navbar-logo-description">Đăng nhập</p>}
+                </div>
+                }
             </div>
         </div>
     </IconContext.Provider>
@@ -171,10 +204,14 @@ export default function Navbar(props){
                 <a href="/do-an-vat/">QUẦY ONLINE</a>
                 </li>
                 <li><a href='/404'>TIN TỨC</a></li>
+                {admin
+                ?<li><a href='/admin'>ADMIN</a></li>
+                :
                 <li><a href='/user/history'>VÉ CỦA TÔI</a></li>
+                }
             </ul>
 
-            <Link style={{textDecoration: 'none', cursor: 'context-menu'}} to={user?{pathname: window.location.pathname}:{pathname: "/login", backURL: window.location.pathname}}>
+            {!admin && <Link style={{textDecoration: 'none', cursor: 'context-menu'}} to={user?{pathname: window.location.pathname}:{pathname: "/login", backURL: window.location.pathname}}>
             <div className="dang-nhap"> 
                 <div className={user?"Navbar-logo-icon-special":"Navbar-logo-icon"}>
                     <IoPerson />
@@ -183,7 +220,18 @@ export default function Navbar(props){
                 :<p className="dang-nhap-p">ĐĂNG NHẬP</p>
                 }
             </div>
-            </Link>
+            </Link>}
+
+            {admin &&
+            <div className="dang-nhap"> 
+                <div className={user?"Navbar-logo-icon-special":"Navbar-logo-icon"}>
+                    <IoPerson />
+                </div>
+                {admin?<p><span className="Navbar-logo-description-span">{admin.adminname}</span> | <span className="Navbar-logo-description-span" onClick={logout}>Thoát</span></p>
+                :<p className="dang-nhap-p">ĐĂNG NHẬP</p>
+                }
+            </div>
+            }
 
         </div>
     </IconContext.Provider>

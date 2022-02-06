@@ -1,6 +1,8 @@
 function logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('userToken');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('adminToken');
 }
 
 function login(user, token){
@@ -20,4 +22,17 @@ function getUserToken() {
     return localStorage.getItem('userToken')
 }
 
-export const authenticationService = {logout, login, getUser, getUserToken, changeUser};
+function loginAdmin(admin, token) {
+    localStorage.setItem('admin', JSON.stringify(admin));
+    localStorage.setItem('adminToken', token);
+}
+
+function getAdmin() {
+    return JSON.parse(localStorage.getItem('admin'));
+}
+
+function getAdminToken() {
+    return localStorage.getItem('adminToken');
+}
+
+export const authenticationService = {logout, login, getUser, getUserToken, changeUser, loginAdmin, getAdmin, getAdminToken};

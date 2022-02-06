@@ -32,8 +32,15 @@ export default function Login(props) {
             try {
                 let res = await post("/users/login", user);
                 if (res.status === 400) setError(true);
+                if (res.status === 202) {
+                    let json = await res.json();
+                    authenticationService.logout();
+                    authenticationService.loginAdmin(json.admin, json.token);
+                    window.location = '/admin';
+                }
                 if (res.status === 200) {
                     let json = await res.json();
+                    authenticationService.logout();
                     authenticationService.login(json.user, json.token);
                     if (props.location.backURL && props.location.backURL.toString() !== '/login') {
                         window.location = props.location.backURL.toString();

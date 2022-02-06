@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
+import { API_URL } from '../../config/Constants';
 
 const sampleData = JSON.parse(`[
   {
@@ -42,8 +43,6 @@ const sampleData = JSON.parse(`[
     "feedback":[]
   }
 ]`)
-
-const API_URL = 'http://localhost:5000'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
