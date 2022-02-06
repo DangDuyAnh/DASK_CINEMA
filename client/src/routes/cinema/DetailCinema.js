@@ -97,7 +97,7 @@ export default function DetailCinema(){
                 <p style={{fontSize: '20px'}}>BÌNH LUẬN</p>
                 <p style={{fontWeight: '600'}}>{comments.length} Bình luận</p>
 
-                <div style={{display: 'flex', flexWrap: 'wrap', marginBottom: '30px'}}>
+                {authenticationService.getUser() && <div style={{display: 'flex', flexWrap: 'wrap', marginBottom: '30px'}}>
                     <img src={API_URL + authenticationService.getUser().avatar} style={{width: '50px', height: '50px', margin: '0px 10px 10px 0px'}} />
                     <div style={{width: '95%'}}>
                     <textarea value={comment} onChange={(e) => {setComment(e.target.value)}} onInput={auto_grow} style={{ boxSizing: 'border-box' ,width: '100%', height: '56px', fontSize: '16px', padding: '20px 15px 20px 15px', margin: '0'}} placeholder='Thêm bình luận...'/>
@@ -105,7 +105,7 @@ export default function DetailCinema(){
                         <button className='dang' onClick={handleDang}>Đăng</button>
                     </div>
                     </div>
-                </div>
+                </div>}
 
                 {comments.map((item, index) => {
                     return(

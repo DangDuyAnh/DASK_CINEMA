@@ -161,7 +161,7 @@ export default function Cinema(props) {
                                     <p style={{color: '#717171', fontSize: '18px', fontWeight: '500', margin: '15px 0px 5px 0px'}}>Giờ chiếu:</p>
                                     <div style={{display: 'flex'}}>
                                         {value.map((item, idx) => { return (
-                                        <div onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
+                                        <div onClick={() => {window.location = ('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
                                             + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="cinema-boxtime">
                                             <p className="cinema-small-time">{item.time}</p>
                                         </div>
@@ -184,7 +184,7 @@ export default function Cinema(props) {
                                     <p style={{color: '#717171', fontSize: '18px', fontWeight: '500', margin: '15px 0px 5px 0px'}}>Giờ chiếu:</p>
                                     <div style={{display: 'flex'}}>
                                         {value.map((item, idx) => { return (
-                                        <div onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
+                                        <div onClick={() => {window.location = ('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
                                             + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="cinema-boxtime">
                                             <p className="cinema-small-time">{item.time}</p>
                                         </div>
