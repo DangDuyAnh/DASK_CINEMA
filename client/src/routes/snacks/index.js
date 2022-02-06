@@ -14,7 +14,7 @@ const sampleData = JSON.parse(`[
     "name":"bỏng ngô",
     "img":"/uploads/images/snacks/pop-corn.png",
     "price":{"M":80000,"L":100000,"XL":150000},
-    "desc":"Đây là bỏng ngô",
+    "desc":"",
     "feedback":[]
   },
   {
@@ -22,7 +22,7 @@ const sampleData = JSON.parse(`[
     "name":"coca",
     "img":"/uploads/images/snacks/coca.png",
     "price":{"M":20000,"L":40000,"XL":60000},
-    "desc":"Đây là coca hahahahahahahahahahahahahahahahahahahaha hahahahahahahahahahahahahahahahahahahaha hahahahahahahahahahahahahahahahahahahaha",
+    "desc":"",
     "feedback":[]
   },
   {
@@ -30,7 +30,7 @@ const sampleData = JSON.parse(`[
     "name":"pepsi",
     "img":"/uploads/images/snacks/pepsi.png",
     "price":{"M":20000,"L":40000,"XL":60000},
-    "desc":"Đây là pepsi",
+    "desc":"",
     "feedback":[]
   },
   {
@@ -38,7 +38,7 @@ const sampleData = JSON.parse(`[
     "name":"ostar",
     "img":"/uploads/images/snacks/ostar.png",
     "price":{"M":20000,"L":40000,"XL":60000},
-    "desc":"Đây là bimbim",
+    "desc":"",
     "feedback":[]
   }
 ]`)

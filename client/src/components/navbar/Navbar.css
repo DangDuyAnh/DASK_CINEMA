@@ -33,7 +33,7 @@
 
 .active-menu {
     /* padding: 15px 130px 0px 15px; */
-    height: 300px;
+    height: 360px;
 }
 
 .Navbar-menu-content a {
@@ -41,7 +41,7 @@
     /* padding: 5px 10px; */
     display: block;
     line-height: 32px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     text-decoration: none;
   }
@@ -106,6 +106,7 @@
 .Navbar-logo{
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .Navbar-logo > :first-child{
@@ -201,7 +202,7 @@
 .dang-nhap {
     display: flex;
     align-items: center;
-    padding-top: 7px;
+    padding-top: 10px;
     padding-right: 20px;
 }
 
@@ -213,13 +214,13 @@
     margin: 0;
 }
 
-.dang-nhap:hover .Navbar-logo-icon {
-    cursor:pointer;
+.dang-nhap:hover .dang-nhap-p {
+    cursor: pointer;
     color: #00a8e1;
 }
 
-.dang-nhap:hover .dang-nhap-p {
-    cursor:pointer;
+.dang-nhap:hover .Navbar-logo-icon {
+    cursor: pointer;
     color: #00a8e1;
 }
 
@@ -277,6 +278,35 @@
   .Navbar-dropdown:hover .dropdown-content {
     display: block;
   }
+
+  .Navbar-logo-icon-special{
+    display: inline-block;
+    color: #26c6da;
+    }
+
+.Navbar-logo-description-special{
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
+}
+
+.Navbar-logo-description-span:hover {
+    cursor: pointer;
+    color: #00a8e1;
+}
+
+.Navbar-wrapper-special{
+    user-select: none;
+    float:left;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 @media only screen and (max-width: 500px) {
     .extra {

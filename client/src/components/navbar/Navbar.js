@@ -4,19 +4,28 @@ import {IoPerson} from "react-icons/io5";
 import {GiTicket, GiWallet, GiFilmSpool} from "react-icons/gi";
 import { IconContext } from "react-icons";
 import { MdArrowDropDown, MdArrowRight} from "react-icons/md";
+import { Link } from 'react-router-dom';
+import { authenticationService } from "../../utility/authenticationService";
 
-export default function Navbar(){
+export default function Navbar(props){
 
     const [openMenu, setOpenMenu] = useState(false);
     const [menuButton, setMenuButton] = useState([false, false, false]);
     const [width, setWindowWidth] = useState(0);
+    const [user, setUser] = useState(authenticationService.getUser());
+
+    const logout = () => {
+        authenticationService.logout();
+        setUser(null);
+    }
 
     useEffect(() => {
+        setUser(authenticationService.getUser());
         updateDimensions();
 
         window.addEventListener('resize', updateDimensions);
         return () => window.removeEventListener('resize', updateDimensions);
-        }, []);
+        }, [props.history]);
 
     const updateDimensions = () => {
     const width = window.innerWidth;
@@ -54,14 +63,14 @@ export default function Navbar(){
                                 <div className="Navbar-logo-icon">
                                 {(menuButton[0])?<MdArrowDropDown />:<MdArrowRight />}
                                 </div>
-                                <a href="#">LỊCH CHIẾU</a>
+                                <a>LỊCH CHIẾU</a>
                             </div>
                             {((menuButton[0]))&&<div className="Navbar-menu-small">
                                 <div className="phim-dang-chieu">
-                                    <a>Phim đang chiếu</a>
+                                    <a href='/phim-dang-chieu'>Phim đang chiếu</a>
                                 </div>
                                 <div className="phim-dang-chieu">
-                                    <a>Phim sắp chiếu</a>
+                                    <a href='/phim-sap-chieu'>Phim sắp chiếu</a>
                                 </div>
                             </div>}
                         </div>
@@ -70,14 +79,26 @@ export default function Navbar(){
                                 <div className="Navbar-logo-icon">
                                     <MdArrowRight />
                                 </div>
-                                <a href="#">HỆ THỐNG RẠP</a>
+                                <a href="/he-thong-rap">HỆ THỐNG RẠP</a>
                             </div>
 
                             <div className="Navbar-menu-item" style={{borderBottom: 0}}>
                                 <div className="Navbar-logo-icon">
                                     <MdArrowRight />
                                 </div>
-                                <a href="#">QUẦY ONLINE</a>
+                                <a href="/do-an-vat">QUẦY ONLINE</a>
+                            </div>
+                            <div className="Navbar-menu-item" style={{borderBottom: 0}}>
+                                <div className="Navbar-logo-icon">
+                                    <MdArrowRight />
+                                </div>
+                                <a href="/404">TIN TỨC</a>
+                            </div>
+                            <div className="Navbar-menu-item" style={{borderBottom: 0}}>
+                                <div className="Navbar-logo-icon">
+                                    <MdArrowRight />
+                                </div>
+                                <a href="/user/history">VÉ CỦA TÔI</a>
                             </div>
 
                     </div>
@@ -85,32 +106,42 @@ export default function Navbar(){
                 </div>
 
                 <div className="Navbar-wrapper extra">
-                    <div className="Navbar-logo-icon">
-                        <GiWallet />
+                    <Link style={{textDecoration: 'none'}} to='/phim-dang-chieu'>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+                        <div className="Navbar-logo-icon">
+                            <GiWallet />
+                        </div>
+                        <p className="Navbar-logo-description">Mua vé</p>
                     </div>
-                    <p className="Navbar-logo-description">Mua vé</p>
+                    </Link>
                 </div>
+
             </div>
 
-            <div className="Navbar-logo">
+            <div className="Navbar-logo" onClick={() => window.location='/'}>
                 <p>DASK</p>
                 <p>CINEMA</p>
             </div>
 
             <div>
+                <Link style={{textDecoration: 'none'}} to='/user/history'>
                 <div className="Navbar-wrapper extra">
                     <div className="Navbar-logo-icon">
                         <GiTicket />
                     </div>
                     <p className="Navbar-logo-description">Vé của tôi</p>
                 </div>
+                </Link>
 
+                <Link style={{textDecoration: 'none', cursor: 'context-menu'}} to={user?{pathname: window.location.pathname}:{pathname: "/login", backURL: window.location.pathname}}>
                 <div className="Navbar-wrapper">
-                    <div className="Navbar-logo-icon">
+                    <div className={user?"Navbar-logo-icon-special":"Navbar-logo-icon"}>
                         <IoPerson />
                     </div>
-                    <p className="Navbar-logo-description">Đăng nhập</p>
+                    {user?<p className="Navbar-logo-description-special"><span className="Navbar-logo-description-span" onClick={() => {window.location='/user/account'}}>{user.ten}</span> | <span className="Navbar-logo-description-span" onClick={logout}>Thoát</span></p>
+                    :<p className="Navbar-logo-description">Đăng nhập</p>}
                 </div>
+                </Link>
             </div>
         </div>
     </IconContext.Provider>
@@ -134,25 +165,26 @@ export default function Navbar(){
                     </div>
                 </li>
                 <li className="Navbar-dropdown">
-                    <a className="Navbar-dropbtn">HỆ THỐNG RẠP</a>
-                    <div className="dropdown-content">
-                        <a>TEST 1</a>
-                        <a>TEST 2</a>
-                    </div>
+                    <a href='/he-thong-rap' className="Navbar-dropbtn">HỆ THỐNG RẠP</a>
                 </li>
                 <li >
                 <a href="/do-an-vat/">QUẦY ONLINE</a>
                 </li>
-                <li><a>TIN TỨC</a></li>
-                <li><a>VÉ CỦA TÔI</a></li>
+                <li><a href='/404'>TIN TỨC</a></li>
+                <li><a href='/user/history'>VÉ CỦA TÔI</a></li>
             </ul>
 
+            <Link style={{textDecoration: 'none', cursor: 'context-menu'}} to={user?{pathname: window.location.pathname}:{pathname: "/login", backURL: window.location.pathname}}>
             <div className="dang-nhap"> 
-            <div className="Navbar-logo-icon">
-                <IoPerson />
+                <div className={user?"Navbar-logo-icon-special":"Navbar-logo-icon"}>
+                    <IoPerson />
+                </div>
+                {user?<p><span className="Navbar-logo-description-span" onClick={() => {window.location='/user/account'}}>{user.ten}</span> | <span className="Navbar-logo-description-span" onClick={logout}>Thoát</span></p>
+                :<p className="dang-nhap-p">ĐĂNG NHẬP</p>
+                }
             </div>
-            <p className="dang-nhap-p">ĐĂNG NHẬP</p>
-            </div>
+            </Link>
+
         </div>
     </IconContext.Provider>
 

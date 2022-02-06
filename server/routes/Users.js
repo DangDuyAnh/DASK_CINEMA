@@ -3,6 +3,7 @@ const {asyncWrapper} = require("../utils/asyncWrapper");
 const express = require("express");
 const usersRoutes = express.Router();
 const auth = require("../middlewares/auth");
+const uploadFiles = require("../middlewares/uploadFiles");
 
 usersRoutes.post(
     "/register",
@@ -10,7 +11,7 @@ usersRoutes.post(
 );
 
 usersRoutes.post(
-    "/losin",
+    "/login",
     asyncWrapper(usersController.login)
 );
 
@@ -23,7 +24,14 @@ usersRoutes.post(
 usersRoutes.post(
     "/change-password",
     auth,
-    asyncWrapper(usersController.changePassword),
+    asyncWrapper(usersController.changedPassword),
+);
+
+usersRoutes.post(
+    "/changeAvatar",
+    auth,
+    uploadFiles,
+    asyncWrapper(usersController.changeAvatar)
 );
 
 usersRoutes.get(

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { get } from "../../utility/api";
+import { get, post } from "../../utility/api";
 import "./index.css"
 import { API_URL } from '../../config/Constants';
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import {useLocation} from "react-router-dom";
+import { authenticationService } from "../../utility/authenticationService";
 export default function Booking(props) {
 
     const [showtime, setShowtime] = useState(null);
@@ -14,7 +15,7 @@ export default function Booking(props) {
     const valDay = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
     const valMonth = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
     const [book, setBook] = useState([]);
-    const [selectedBook, setSelectedBook] = useState(['A1', 'B3']);
+    const [selectedBook, setSelectedBook] = useState([]);
     const [movieMoney, setMovieMoney] = useState(0);
     const [comboMoney, setComboMoney] = useState(0);
     const [snack, setSnack] = useState([]);
@@ -36,6 +37,10 @@ export default function Booking(props) {
     let dayBooking = query.get("day");
 
     const checkDay = () => {
+        if (!dayBooking) {
+            props.history.push('/404');
+            return; 
+        }
         let date = dayBooking.substring(0,2);
         let month = dayBooking.substring(2,4);
         let year = dayBooking.substring(4,8);
@@ -117,7 +122,77 @@ export default function Booking(props) {
         window.scrollTo(0, 0);
     }
 
+    const handleBook = async () => {
+        let tempFood = [];
+        snackCount.forEach((item, index) => {
+            item.forEach((value, idx) => {
+                if (value !== 0) {
+                    if (idx === 0) {
+                        tempFood.push({
+                            name: snack[index].name + ' size ' + 'M',
+                            price: snack[index].price.M,
+                            count: value,
+                            total: snack[index].price.M*value
+                        })
+                    } else if (idx === 1) {
+                        tempFood.push({
+                            name: snack[index].name + ' size ' + 'L',
+                            price: snack[index].price.L,
+                            count: value,
+                            total: snack[index].price.L*value
+                        })
+                    }  else if (idx === 2) {
+                        tempFood.push({
+                            name: snack[index].name + ' size ' + 'XL',
+                            price: snack[index].price.XL,
+                            count: value,
+                            total: snack[index].price.XL*value
+                        })
+                    }
+                }
+            })
+        })
+        let bookObj = {
+            showtime: props.match.params.id,
+            date: day,
+            seat: book,
+            money: movieMoney + comboMoney,
+            food: tempFood
+        }
+        try {
+            let res = await post("/books/create", bookObj, authenticationService.getUserToken());
+            props.history.push('/user/history');
+        } catch(e) {
+            console.log(e)
+        }
+
+    }
+
     useEffect(() => {
+        if (!dayBooking) {
+            props.history.push('/404');
+            return; 
+        }
+        let date = dayBooking.substring(0,2);
+        let month = dayBooking.substring(2,4);
+        let year = dayBooking.substring(4,8);
+        if (!valDay.includes(date) || !valMonth.includes(month) || (year !== '2022')) {
+            props.history.push('/404');
+            return;
+        }
+        if (month === '04' || month === '06' || month === '09' || month === '11') {
+            if (date === '31') {
+                props.history.push('/404');
+                return; 
+            }
+        }
+        if (month === '02') {
+            if (date === '31' || (date === '30') || (date === '29')) {
+                props.history.push('/404');
+                return; 
+            }
+        }
+        setDay(`${date}-${month}-${year}`)
         const getShowtimes = async () => {
             try {
                 let res = await get("/showtimes/findShowtime/" + props.match.params.id);
@@ -128,11 +203,25 @@ export default function Booking(props) {
 
                 let snacks = await get("/snacks/list");
                 setSnack(snacks);
+
+                const searchObj = {
+                    date: `${date}-${month}-${year}`,
+                    showtime: props.match.params.id
+                }
+                let res2 = await post("/books/list", searchObj);
+                let json = await res2.json();
+                let tempArr = []
+                json.books.forEach((item) => {
+                    item.seat.forEach(value => {
+                        tempArr.push(value)
+                    })
+                });
+                setSelectedBook(tempArr);
+
             } catch(e) {
-                props.history.push('/404');
+                // props.history.push('/404');
                 console.log(e);
             }}
-            checkDay();
             getShowtimes();
     }, []);
 
@@ -364,10 +453,10 @@ export default function Booking(props) {
 
                 <div style={{width: '90%', display: 'flex', flexDirection: 'row-reverse', margin: '90px 0px 50px 0px'}}>
                     <div style={{ border: '1px solid #616161' ,padding: '5px 15px 6px 15px', borderRadius: '5px', marginLeft: '30px',
-                        marginRight: '20px'}}>
+                        marginRight: '20px', cursor: 'pointer'}} onClick={() => props.history.push('/')}>
                         <p style={{padding: 0, margin: 0, fontSize: '18px', color: '#616161', fontWeight: '400'}}>Hủy</p>
                     </div>
-                    <div style={{backgroundColor: '#CE0E2D', padding: '5px 15px 6px 15px', borderRadius: '5px'}}>
+                    <div style={{backgroundColor: '#CE0E2D', padding: '5px 15px 6px 15px', borderRadius: '5px', cursor: 'pointer'}} onClick={handleBook}>
                         <p style={{padding: 0, margin: 0, fontSize: '18px', color: 'white', fontWeight: '500'}}>Thanh toán</p>
                     </div>
                 </div>

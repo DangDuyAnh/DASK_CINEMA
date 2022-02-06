@@ -7,11 +7,13 @@ import CallEndIcon from '@mui/icons-material/CallEnd';
 import "./index.css";
 import { newsData } from './HomeData';
 import { movies } from './HomeData';
+import { API_URL } from '../../config/Constants';
 
-export default function Homepage(){
+export default function Homepage(props){
 
   const [slideIndex, setSlideIndex] = useState(0);
   const [movieIndex, setMovieIndex] = useState(0);
+  const [movieList, setMovieList] = useState([]);
 
   const plusSlides = (n) => {
     let i = slideIndex + n;
@@ -41,8 +43,10 @@ export default function Homepage(){
 
   useEffect(() => {
     let track = document.querySelector('.track');
-    let slideWidth = document.querySelector('.card').offsetWidth;
-    track.style.transform = `translateX(-${movieIndex*slideWidth}px)`;
+    if (document.querySelector('.card')) {
+      let slideWidth = document.querySelector('.card').offsetWidth;
+      track.style.transform = `translateX(-${movieIndex*slideWidth}px)`;
+    }
   }, [movieIndex])
 
   useEffect(() => {
@@ -57,6 +61,30 @@ export default function Homepage(){
     }, 5000);
     return () => clearInterval(interval);
   })
+
+  useEffect(() => {
+    try {
+        const getData = async () => {
+          const response = await fetch(API_URL+'/api/movies/getListMovies/now_playing', {
+              method: 'GET',
+              headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: undefined,
+              },
+          });
+          const json = await response.json();
+          let tempArr = []
+          for (let i=0; i<8; i++) {
+            tempArr.push(json.movieList[i])
+          };
+          setMovieList(tempArr);
+        }
+        getData()
+    } catch(e) {
+        console.log(e);
+    }
+}, []);
 
   return (
     <IconContext.Provider value={{ size: "30px"}}>
@@ -100,22 +128,22 @@ export default function Homepage(){
           
       <div className="movie-series">
         <div className="track">
-          {movies.map((item, index) => {
+          {movieList.map((item, index) => {
             return(
               <div className="card" key={index}>
-                <img src={item.src} />
+                <img src={API_URL + item.poster} />
                 <div className="Home-overlay">
                   <div className="bottom-overlay"> 
-                    <h1>Tiêu đề phim rất là dài này nhé</h1>
+                    <h1>{item.title}</h1>
                     
                     <div className="overlay-button-group"> 
-                      <div className="overlay-wrapper"> 
-                        <p>Xem chi tiết </p>
+                      <div className="overlay-wrapper" onClick={() => props.history.push('/phim/' +item._id)}> 
+                        <p >Xem chi tiết </p>
                       </div>
-                      <div className="overlay-wrapper"> 
+                      <div className="overlay-wrapper" onClick={() => props.history.push('/phim/' +item._id+ '?booking=true')}> 
                         <div className="overlay-book">
                         <CallEndIcon style={{color: "white", marginLeft: "7px"}}/>
-                        <p>MUA VÉ </p>
+                        <p >MUA VÉ </p>
                         </div>
                       </div>
                     </div>

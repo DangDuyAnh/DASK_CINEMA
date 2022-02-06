@@ -18,12 +18,8 @@ const usersSchema = new Schema({
     max: 255,
     min: 6,
   },
-  firstname: { 
-    type: String, 
-    required: true,
-  },
-  lastname: { 
-    type: String, 
+  ten: {
+    type: String,
     required: true,
   },
   phonenumber: { 
@@ -33,16 +29,12 @@ const usersSchema = new Schema({
   gender: {
     type: String,
     enum: [GENDER_MALE, GENDER_FEMALE, GENDER_SECRET],
-    required: false,
-    default: GENDER_SECRET
+    required: true,
+    default: GENDER_MALE
   },
   birthday: {
-    type: Date,
-    required: false,
-  },
-  address: {
     type: String,
-    required: false,
+    required: true,
   },
   avatar: {
     type: String,

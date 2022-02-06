@@ -1,0 +1,101 @@
+.cinema-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 280px);
+    justify-content: space-between;
+}
+
+.cinema-card {
+    margin-bottom: 42px;
+    height: 180px;
+    width: 280px;
+    background-color: #151f28;
+    transition: background-color 0.4s ease;
+}
+
+.cinema-info {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.cinema-detail {
+    width: 100%;
+    height: 40px;
+    background-color: #263247;
+    /* background-color: #2e3c53; */
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cinema-card:hover {
+    cursor: pointer;
+    background-color: #283a49;
+}
+
+.cinema-card:hover .cinema-detail {
+    background-color: #0091ea;
+}
+
+.cinema-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0;
+    margin: 5px 0px 25px 0px;
+}
+
+.cinema-address {
+    color: #90a0ba;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+}
+
+.cinema-boxtime {
+    background-color: #d20d0d;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+
+.cinema-small-time {
+    margin: 0;
+    padding: 7px 12px 9px 12px;
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+}
+
+.cinema-boxtime:hover {
+    cursor: pointer;
+    background-color: #ec2b2b;
+}
+
+.time-active {
+    visibility: visible;
+}
+
+.time-disable {
+    visibility: hidden;
+}
+
+.dang {
+    background-color: #008CBA;
+    border-radius: 4px ;
+    color: white;
+    padding: 8px 13px ;
+    text-align: center ;
+    cursor: pointer;
+    border: 0;
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.dang:hover {
+    background-color: #005c7a;
+}

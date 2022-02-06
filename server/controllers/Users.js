@@ -10,12 +10,10 @@ usersController.register = async (req, res, next) => {
         const {
             email,
             password,
-            firstname,
-            lastname,
+            ten,
             phonenumber,
             gender,
             birthday,
-            address
         } = req.body;
 
         let user = await UserModel.findOne({
@@ -35,10 +33,10 @@ usersController.register = async (req, res, next) => {
         user = new UserModel({
             email: email,
             password: hashedPassword,
-            firstname: firstname,
-            lastname: lastname,
+            ten: ten,
             phonenumber: phonenumber,
             gender: gender,
+            birthday: birthday,
             avatar: avatar,
         });
 
@@ -48,7 +46,7 @@ usersController.register = async (req, res, next) => {
             // login for User
             // create and assign a token
             const token = jwt.sign(
-                {firstname: savedUser.firstname, lastname: savedUser.lastname, email: savedUser.email, id: savedUser._id},
+                {ten:savedUser.ten , email: savedUser.email, id: savedUser._id},
                 JWT_SECRET
             );
             res.status(httpStatus.CREATED).json({
@@ -73,7 +71,7 @@ usersController.login = async (req, res, next) => {
             email,
             password
         } = req.body;
-        const user = await UserModel.findOne({
+        let user = await UserModel.findOne({
             email: email
         })
 
@@ -95,12 +93,14 @@ usersController.login = async (req, res, next) => {
 
         // create and assign a token
         const token = jwt.sign(
-            {firstname: user.firstname, lastname: user.lastname, email: user.email, id: user._id},
+            {ten: user.ten, email: user.email, id: user._id},
             JWT_SECRET
         );
-        delete user["password"];
+        let returnedUser = await UserModel.findOne({
+            email: email
+        }).select('-password');
         return res.status(httpStatus.OK).json({
-            user: user,
+            user: returnedUser,
             token: token
         })
     } catch (e) {
@@ -166,6 +166,73 @@ usersController.changedPassword = async (req, res, next) => {
     }
 }
 
+usersController.edit = async (req, res, next) => {
+    try {
+        let userId = req.userId;
+
+        let  user = await UserModel.findById(userId);
+        if (user == null) {
+            return res.status(httpStatus.UNAUTHORIZED).json({
+                message: "UNAUTHORIZED"
+            });
+        }
+
+        const {
+            currentPassword,
+            newPassword,
+        } = req.body;
+
+        const validPassword = await bcrypt.compare(currentPassword, user.password);
+
+        if (!validPassword) {
+            return res.status(httpStatus.BAD_REQUEST).json({
+                message: 'Current password incorrect',
+                code: 'CURRENT_PASSWORD_INCORRECT'
+            });
+        }
+
+        if (newPassword) {
+            const salt = await bcrypt.genSalt(10);
+            const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+
+            user = await UserModel.findOneAndUpdate({_id: userId}, {
+                password: hashedNewPassword
+            }, {
+                new: true,
+                runValidators: true
+            });
+            }
+
+        const dataUserUpdate = {};
+        const listPros = [
+            "ten",
+            "phonenumber",
+            "birthday",
+            "gender",
+        ];
+        for (let i = 0; i < listPros.length; i++) {
+            let pro = listPros[i];
+            if (req.body[pro]) {
+                dataUserUpdate[pro] = req.body[pro];
+            }
+        }
+
+        user = await UserModel.findOneAndUpdate({_id: userId}, dataUserUpdate, {
+            new: true,
+            runValidators: true
+        });
+
+        user = await UserModel.findById(userId);
+        return res.status(httpStatus.OK).json({
+            data: user
+        });
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
+}
+
 usersController.show = async (req, res, next) => {
     try {
         let userId = null;
@@ -175,7 +242,7 @@ usersController.show = async (req, res, next) => {
             userId = req.userId;
         }
 
-        let user = await UserModel.findById(userId).select('email firstname lastname phonenumber gender birthday address avatar').populate('avatar');
+        let user = await UserModel.findById(userId);
         if (user == null) {
             return res.status(httpStatus.NOT_FOUND).json({
                 message: 'Can not find user'
@@ -191,5 +258,35 @@ usersController.show = async (req, res, next) => {
         })
     }
 }
+
+usersController.changeAvatar = async (req, res, next) => {
+    try {
+        let userId = req.userId;
+        let user = await UserModel.findById(userId);
+        let imageFiles = [];
+        if (req.files.images) {
+            imageFiles = req.files.images;
+        }
+        let image;
+        imageFiles.forEach((item) => {
+            image = '/uploads/images/' + item.filename;
+        })
+
+        let savedUser = await UserModel.findByIdAndUpdate(userId, {
+            avatar: image
+        }, {
+            new: true,
+            runValidators: true
+        });
+       
+        return res.status(httpStatus.OK).json({
+            user: savedUser
+        });
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        })
+    }
+};
 
 module.exports = usersController;

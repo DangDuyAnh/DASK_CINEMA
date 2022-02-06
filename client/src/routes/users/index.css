@@ -1,0 +1,69 @@
+.account-info {
+    margin: 5px 0px;
+    padding: 0;
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.history-table {
+    margin-top: 50px;
+    width: 100%;
+    border-collapse: collapse;
+    max-width: 80vw;
+}
+
+  .history-table th {
+    padding: 12px 8px;
+  }
+
+  .history-table td {
+      padding: 8px 8px
+  }
+
+  .history-table td {
+    border-bottom: 1px solid #e0e0e0
+  }
+
+  .history-table th {
+    text-align: left;
+    background-color: #eeeeee;
+    border-bottom: 1px solid black;
+  }
+
+  
+  .model2-active {
+    display: block; /* Hidden by default */
+  }
+
+  .modal2-content {
+    position: relative;
+    background-color: white;
+    margin: auto;
+    width: 1170px;
+    max-width: 100vw;
+    border: 1px solid #888;
+    border-radius: 5px;
+    margin-bottom: 100px;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+
+  .close2 {
+    color: #aaaaaa;
+    position: absolute;
+    right: 0;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-right: 15px ;
+  }
+  
+  .close2:hover,
+  .close2:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }

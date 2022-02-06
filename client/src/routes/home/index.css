@@ -189,7 +189,8 @@ font-size: 30px;
   width: 98%;
   height: 400px;
   top: 0;
-  background-color: rgba(167, 167, 167, 0.144);
+  /* background-color: rgba(167, 167, 167, 0.144); */
+  background-color: rgba(0, 0, 0, 0.329);
 }
 
 .bottom-overlay {
@@ -227,6 +228,7 @@ font-size: 30px;
   font-weight: 700;
   padding: 6px 12px;
   margin: 0;
+  text-decoration: none;
 }
 
 .overlay-book {
@@ -242,6 +244,7 @@ font-size: 30px;
   font-weight: 700;
   padding: 6px 7px;
   margin: 0;
+  text-decoration: none;
 }
 
 .overlay-button-group:hover {

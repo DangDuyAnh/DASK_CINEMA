@@ -18,4 +18,9 @@ showtimeRoutes.get(
     asyncWrapper(showtimeController.get)
 )
 
+showtimeRoutes.get(
+    "/getList",
+    asyncWrapper(showtimeController.getList)
+)
+
 module.exports = showtimeRoutes

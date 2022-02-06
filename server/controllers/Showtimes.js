@@ -1,4 +1,4 @@
-const ShowTimeModel = require('../models/Showtimes');
+const ShowTimeModel = require('../models/showtimes');
 const movieModel = require("../models/movies");
 const cinemaModel = require("../models/cinemas")
 const httpStatus = require("../utils/httpStatus");
@@ -51,6 +51,25 @@ showtimeController.find = async (req, res, next) => {
         });
     }
         
+}
+
+showtimeController.getList = async (req, res, next) => {
+    try {
+        const showtimes = await ShowTimeModel.find().populate({
+            path: 'cinema',
+            model: 'cinema'
+        }).populate({
+            path: 'movie',
+            model: 'movie'
+        });
+        return res.status(httpStatus.OK).json({
+            showtimes: showtimes
+        })
+    } catch (e) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
 }
 
 showtimeController.get = async (req, res, next) => {

@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { BsClockHistory, BsPlayFill } from "react-icons/bs";
+import {useLocation} from "react-router-dom";
 import "./index.css"
 import { get } from "../../utility/api";
 import { API_URL } from '../../config/Constants';
@@ -14,6 +15,13 @@ export default function Movie(props) {
     const [selectedDate, setSelectedDate] = useState(0);
     const [showtimes, setShowtimes] = useState({});
     const [todayShowtimes, setTodayShowtimes] = useState({});
+
+    const bookingRef = useRef();
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+      }
+    let query = useQuery();
+    let booking = query.get("booking");
 
     useEffect(() => {
         let dateArray = [];
@@ -85,6 +93,12 @@ export default function Movie(props) {
         }}
         getShowtimes();
     }, []);
+
+    useEffect(() => {
+        if (booking === "true" && movie) {
+            bookingRef.current.scrollIntoView({ behavior: 'smooth' })
+          }
+    }, [movie]);
 
     const getDay = (date) => {
         let singleDay = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -174,7 +188,8 @@ export default function Movie(props) {
                 </div>
 
                 <div style={{minHeight: '600px'}}>
-                    <h1 style={{padding: 0, marginTop: '50px', fontSize: '20px', fontWeight: '600'}}>LỊCH CHIẾU</h1>
+                    <h1 style={{padding: 0, marginTop: '50px', fontSize: '20px', fontWeight: '600'}}
+                        ref={bookingRef}>LỊCH CHIẾU</h1>
                     <div style={{width: '80px', height: '2px', backgroundColor: '#00a8e1'}}/>
 
                     <div style={{width: '100%', height: '1px', backgroundColor: 'black', marginTop: '30px'}}/>
@@ -215,8 +230,8 @@ export default function Movie(props) {
                             <div style={{width: '750px', height: '85px', border: '1px solid black', display: 'flex', alignItems: 'center'
                                 ,paddingLeft: '20px', maxWidth: '90vw'}}>
                                 {value.map((item, idx) => { return (
-                                <div onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
-                                    + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="box-small-time">
+                                <div key={idx} onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
+                                + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="box-small-time">
                                     <p className="small-time">{item.time}</p>
                                 </div>
                                 )})}
@@ -238,7 +253,7 @@ export default function Movie(props) {
                             <div style={{width: '750px', height: '85px', border: '1px solid black', display: 'flex', alignItems: 'center'
                                 ,paddingLeft: '20px', maxWidth: '90vw'}}>
                                 {value.map((item, idx) => { return (
-                                <div onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
+                                <div key={idx} onClick={() => {props.history.push('/booking/' + item._id + '?day=' + getDay(dates[selectedDate]) 
                                     + getMonth(dates[selectedDate]) + '2022')}} key={idx} className="box-small-time">
                                     <p className="small-time">{item.time}</p>
                                 </div>

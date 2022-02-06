@@ -3,10 +3,9 @@ import * as Const from '../config/Constants';
 
 const API_URL = Const.API_URL + '/api';
 
-export const authPost = (url, body, token = undefined) => {
+export const post = (url, body, token = undefined) => {
   let _token
   if (token === undefined) {
-    console.log('test');
     _token = token;
   } else {
     _token = `Bearer ${token}`;
@@ -20,18 +19,7 @@ export const authPost = (url, body, token = undefined) => {
     body: JSON.stringify(body),
   }).then(
     (res) => {
-      if (!res.ok) {
-        if (res.status === 401) {
-          throw Error("Unauthorized");
-        } else {
-          console.log(res);
-          try {
-            res.json().then((res1) => console.log(res1));
-          } catch (err) {}
-          throw Error();
-        }
-      }
-      return res.json();
+      return res;
     },
     (error) => {
       console.log(error);
